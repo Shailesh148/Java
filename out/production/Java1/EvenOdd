@@ -1,0 +1,15 @@
+import java.util.*;
+class EvenOdd{
+public static void main(String[]abcd){
+int num;
+Scanner sc = new Scanner(System.in);
+System.out.print("Enter the value: ");
+num = sc.nextInt();
+if(num%2==0)
+{
+System.out.println("The girven number is even number: " +num);
+}
+else
+System.out.println("NOt a Even Number");
+}
+}
