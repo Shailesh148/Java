@@ -10,6 +10,7 @@
     <context:component-scan base-package="org.example.springmavensession"></context:component-scan>
     <bean id="vehicle" class="org.example.springmavensession.Bike"></bean>
     <bean id="tyre" class="org.example.springmavensession.Tyre">
-        <property name="brand" value="MRF"></property>
+<!--        <property name="brand" value="MRF"></property>-->
+        <constructor-arg value="MR1"></constructor-arg>
     </bean>
 </beans>
