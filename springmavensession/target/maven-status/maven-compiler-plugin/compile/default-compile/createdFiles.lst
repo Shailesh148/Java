@@ -1,4 +1,12 @@
-org/example/springmavensession/Bike.class
+org/example/configurationsannotation/AppConfigration.class
+org/example/configurationsannotation/GamingKeyboard.class
+org/example/configurationsannotation/LaptopConfiguration.class
 org/example/springmavensession/Car.class
+org/example/configurationsannotation/Keyboard.class
+org/example/javapostgres/PostgresJava.class
+org/example/springmavensession/Bike.class
+org/example/springmavensession/Tyre.class
 org/example/springmavensession/App.class
 org/example/springmavensession/Vehicle.class
+org/example/configurationsannotation/NormalKeyboard.class
+org/example/configurationsannotation/Laptop.class
