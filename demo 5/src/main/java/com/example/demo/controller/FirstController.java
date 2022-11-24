@@ -3,7 +3,9 @@ package com.example.demo.controller;
 
 import com.example.demo.Person;
 import com.example.demo.entity.PersonEntity;
+import com.example.demo.exception.CustonException;
 import com.example.demo.respository.PersonJPARespository;
+import com.example.demo.service.FirstService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 public class FirstController {
 
     @Autowired
-    PersonJPARespository personJPARespository;
+    FirstService firstService;
 
     @GetMapping()
     public ResponseEntity<List<PersonEntity>> getAllPerson() {
@@ -33,8 +35,11 @@ public class FirstController {
 //
 //
 //        List<Person> personsList = new ArrayList<>(Arrays.asList(p1, p2, p3, p4, p5));
-        List<PersonEntity> personsList = personJPARespository.findAll();
-        return new ResponseEntity<>(personsList, HttpStatus.OK);
+        List<PersonEntity> personsList = firstService.findAllData();
+        throw new CustonException("null pointer exception captured");
+//        throw new NullPointerException("null pointer exception captured");
+//        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+//        return new ResponseEntity<>(personsList, HttpStatus.OK);
     }
 
     @GetMapping("/{person_name}")
@@ -52,21 +57,36 @@ public class FirstController {
         return new ResponseEntity<>(resultingList, HttpStatus.OK);
     }
 
-    @PostMapping()
-    public ResponseEntity<List<Person>> getPersonDetails(@RequestBody Person person) {
-        Person p1 = new Person("Shailesh", 27);
-        Person p2 = new Person("Utsav", 25);
-        Person p3 = new Person("Ayush", 35);
-        Person p4 = new Person("Ramesh", 27);
-        Person p5 = new Person("Adhip", 26);
+    @PutMapping()
+    public ResponseEntity<Integer> getPersonDetails(@RequestBody Person person) {
+//        Person p1 = new Person("Shailesh", 27);.
+//        Person p2 = new Person("Utsav", 25);
+//        Person p3 = new Person("Ayush", 35);
+//        Person p4 = new Person("Ramesh", 27);
+//        Person p5 = new Person("Adhip", 26);
+//
+//
+//        List<Person> personsList = new ArrayList<>(Arrays.asList(p1, p2, p3, p4, p5));
+//
+//        personsList.add(person);
 
-
-        List<Person> personsList = new ArrayList<>(Arrays.asList(p1, p2, p3, p4, p5));
-
-        personsList.add(person);
-        return new ResponseEntity<>(personsList, HttpStatus.OK);
+        int result = firstService.updateExistingPersonData(person.getAge(), person.getName());
+        return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
 
-    // edit a person, using requestparam
+//    localhost://8080/persons?age=
+//    @GetMapping()
+//    public ResponseEntity<List<Person>> getPersonDetailsByAge(@RequestParam Integer age) {
+//
+//        return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
+//
+//    }
+
+
+
+    // add a person,
+    // use findByAge from repository
+
+
 }
