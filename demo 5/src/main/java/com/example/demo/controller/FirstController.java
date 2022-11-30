@@ -36,29 +36,41 @@ public class FirstController {
 //
 //        List<Person> personsList = new ArrayList<>(Arrays.asList(p1, p2, p3, p4, p5));
         List<PersonEntity> personsList = firstService.findAllData();
-        throw new CustonException("null pointer exception captured");
+
+        PersonEntity personEntity = PersonEntity
+                .builder()
+                .age(12)
+                .name("R")
+                .build();
+        System.out.println(personEntity);
+//        throw new CustonException("null pointer exception captured");
 //        throw new NullPointerException("null pointer exception captured");
 //        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-//        return new ResponseEntity<>(personsList, HttpStatus.OK);
+        System.out.println("before giving response");
+        return new ResponseEntity<>(personsList, HttpStatus.OK);
     }
 
     @GetMapping("/{person_name}")
-    public ResponseEntity<List<Person>> getPersonDetails(@PathVariable String person_name) {
+    public ResponseEntity<List<PersonEntity>> getPersonDetails(@PathVariable String person_name) {
 
-        Person p1 = new Person("Shailesh", 27);
-        Person p2 = new Person("Utsav", 25);
-        Person p3 = new Person("Ayush", 35);
-        Person p4 = new Person("Ramesh", 27);
-        Person p5 = new Person("Adhip", 26);
+//        Person p1 = new Person("Shailesh", 27);
+//        Person p2 = new Person("Utsav", 25);
+//        Person p3 = new Person("Ayush", 35);
+//        Person p4 = new Person("Ramesh", 27);
+//        Person p5 = new Person("Adhip", 26);
+//
+//
+//        List<Person> personsList = new ArrayList<>(Arrays.asList(p1, p2, p3, p4, p5));
+//        List<Person> resultingList = personsList.stream().filter(p -> p.getName().equals(person_name)).collect(Collectors.toList());
+        List<PersonEntity> personsList = firstService.futureHandleErrors(person_name);
 
 
-        List<Person> personsList = new ArrayList<>(Arrays.asList(p1, p2, p3, p4, p5));
-        List<Person> resultingList = personsList.stream().filter(p -> p.getName().equals(person_name)).collect(Collectors.toList());
-        return new ResponseEntity<>(resultingList, HttpStatus.OK);
+        return new ResponseEntity<>(personsList, HttpStatus.OK);
     }
 
     @PutMapping()
     public ResponseEntity<Integer> getPersonDetails(@RequestBody Person person) {
+
 //        Person p1 = new Person("Shailesh", 27);.
 //        Person p2 = new Person("Utsav", 25);
 //        Person p3 = new Person("Ayush", 35);
