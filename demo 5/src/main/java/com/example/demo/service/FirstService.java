@@ -4,11 +4,14 @@ import com.example.demo.entity.PersonEntity;
 import com.example.demo.respository.PersonJPARespository;
 import com.example.demo.util.AsyncFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,9 +44,6 @@ public class FirstService {
     }
 
 
-
-
-
     public int updateExistingPersonData(Integer age, String name)  {
         String apiUrl = "http://localhost:8080/persons";
 
@@ -60,13 +60,21 @@ public class FirstService {
     }
 
 
+    @Cacheable(value="personDetailsCache")
     public List<PersonEntity> findByNameContainsAsynchronous(String name)  {
 
-        asyncFunctions.runWithAsync(1);
-        asyncFunctions.runWithAsync(2);
+//        asyncFunctions.runWithAsync(1);
+//        asyncFunctions.runWithAsync(2);
 
-
+        System.out.println("fetching details from repo for name " + name);
         return personJPARespository.findByNameContains(name);
+    }
+
+
+    @CacheEvict(value="personDetailsCache", allEntries = true)
+    @Scheduled(cron ="0 */1 * ? * *")
+    public void evictCache() {
+        System.out.println("evicting cache here");
     }
 
 

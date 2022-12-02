@@ -6,7 +6,10 @@ import com.example.demo.entity.PersonEntity;
 import com.example.demo.exception.CustonException;
 import com.example.demo.respository.PersonJPARespository;
 import com.example.demo.service.FirstService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,11 @@ import java.util.stream.Collectors;
 @Controller()
 @RequestMapping("/persons")
 public class FirstController {
+
+    Logger logger = LoggerFactory.getLogger(FirstController.class);
+
+    @Value("${userpath.value}")
+    String userPath;
 
     @Autowired
     FirstService firstService;
@@ -43,6 +51,9 @@ public class FirstController {
                 .name("R")
                 .build();
         System.out.println(personEntity);
+        logger.info(personEntity.toString());
+        logger.info(userPath);
+
 //        throw new CustonException("null pointer exception captured");
 //        throw new NullPointerException("null pointer exception captured");
 //        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -62,7 +73,7 @@ public class FirstController {
 //
 //        List<Person> personsList = new ArrayList<>(Arrays.asList(p1, p2, p3, p4, p5));
 //        List<Person> resultingList = personsList.stream().filter(p -> p.getName().equals(person_name)).collect(Collectors.toList());
-        List<PersonEntity> personsList = firstService.futureHandleErrors(person_name);
+        List<PersonEntity> personsList = firstService.findByNameContainsAsynchronous(person_name);
 
 
         return new ResponseEntity<>(personsList, HttpStatus.OK);
